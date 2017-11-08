@@ -1,3 +1,7 @@
+Projet: Solitaire
+
+Collaborateurs: Marko & Franck
+
 Architecture:
 
-	Classe : Couleur, FaceCachée, FaceRetournée.
+	Classe : Cartes, Pioche, Solitaire et Main.
