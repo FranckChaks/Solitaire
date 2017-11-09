@@ -15,7 +15,7 @@ public class Main {
                 String next = in.next().toLowerCase();
 
                 if (next.equals("help")) {
-                    System.out.println();
+                    //System.out.println();
                     System.out.print("Press \"m\" to move cards\n");
                     System.out.print("Press \"d\" to draw from the stack\n");
                     System.out.print("Press \"new\" to start a new game\n");
@@ -28,24 +28,25 @@ public class Main {
                     int to = in.nextInt();
                     int number = in.nextInt();
 
-                    game.move(from, to, number);
-                    game.print();
+                    solitaire.move(from, to, number);
+                    solitaire.print();
                 } else if (next.equals("d")) {
-                    game.drawStack();
-                    game.print();
+                	solitaire.drawStack();
+                	solitaire.print();
                 } else if (next.equals("new")) {
                     break;
                 } else if (next.equals("redraw")) {
-                    game.print();
+                	solitaire.print();
                 } else if (next.equals("quit")) {
                     break;
                 } else if (next.equals("size")) {
-                    game.printSize();
+                	solitaire.printSize();
                 } else {
                     System.out.print("Veuillez entrer une option valide\n");
                 }
 
-                if (game.win()) {
+                if (solitaire.win()) {
+                	System.out.println("k");
                     System.out.print("*****************\n");
                     System.out.print("*****YOU WON*****\n");
                     System.out.print("*****************\n");
