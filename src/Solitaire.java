@@ -45,7 +45,7 @@ public class Solitaire {
         System.out.println();
 
         for (int i = 7; i < 11; i++) {
-            System.out.print(i + ":\t");
+            System.out.print(i + ": \t");
             int size = sets[i].size();
             if (size > 0) {
                 for (int j = 0; j < size; j++){
@@ -57,7 +57,7 @@ public class Solitaire {
         }
 
         System.out.println();
-        System.out.print(12 + ":\t");
+        System.out.print(12 + ": Pioche:\t");
         int size = sets[12].size();
         if (size > 0) {
             for (int j = 0; j < size; j++){
@@ -68,6 +68,8 @@ public class Solitaire {
 
         System.out.println();
         System.out.print("****************************************************");
+        System.out.println();
+        System.out.println("Pour voir les commandes, entrez 'help'.");
         System.out.println();
         System.out.println();
     }
@@ -116,7 +118,7 @@ public class Solitaire {
         if (to > 6) {
             if (number > 1) {
                 System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-                System.out.print("Impossible, trop de carte\n");
+                System.out.print("Mouvement impossible, réessayez !\n");
                 System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
                 return false;
             }
@@ -149,7 +151,7 @@ public class Solitaire {
             }
 
             System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-            System.out.print("Impossible le controle ne passe pas\n");
+            System.out.print("Mouvement impossible, réessayez !\n");
             System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
             return false;
         } else {

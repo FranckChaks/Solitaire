@@ -14,7 +14,7 @@ public class Main {
 
                 if (next.equals("help")) {
                     System.out.println();
-                    System.out.print("Press \"d\" Déplacer la carte\n");
+                    System.out.print("Press \"d\" Déplacer la carte (entrez ensuite le numéro de la ligne d'origine, puis la ligne d'arrivée et le position de la carte visible\n");
                     System.out.print("Press \"p\" Piocher une carte\n");
                     System.out.print("Press \"nouveau\" Nouveau jeu\n");
                     System.out.print("Press \"r\" Réafficher le game ma men\n");
