@@ -1,5 +1,3 @@
-package src;
-
 import java.io.*;
 import java.util.Scanner;
 
@@ -16,44 +14,45 @@ public class Main {
 
                 if (next.equals("help")) {
                     System.out.println();
-                    System.out.print("Press \"m\" to move cards\n");
-                    System.out.print("Press \"d\" to draw from the stack\n");
-                    System.out.print("Press \"new\" to start a new game\n");
-                    System.out.print("Press \"redraw\" to redraw the game\n");
-                    System.out.print("Press \"quit\" to quit the game\n");
-                    System.out.print("Press \"size\" to print the size of the stack\n");
+                    System.out.print("Press \"d\" Déplacer la carte\n");
+                    System.out.print("Press \"p\" Piocher une carte\n");
+                    System.out.print("Press \"nouveau\" Nouveau jeu\n");
+                    System.out.print("Press \"r\" Réafficher le game ma men\n");
+                    System.out.print("Press \"quitter\" quitter la partie\n");
+                    System.out.print("Press \"afficher\" afficher la taille de la pile\n");
                     System.out.println();
-                } else if (next.equals("m")) {
+                } else if (next.equals("d")) {
                     int from = in.nextInt();
                     int to = in.nextInt();
                     int number = in.nextInt();
 
-                    game.move(from, to, number);
-                    game.print();
-                } else if (next.equals("d")) {
-                    game.drawStack();
-                    game.print();
-                } else if (next.equals("new")) {
+                    solitaire.move(from, to, number);
+                    solitaire.print();
+                } else if (next.equals("p")) {
+                    solitaire.drawStack();
+                    solitaire.print();
+                } else if (next.equals("nouveau")) {
                     break;
-                } else if (next.equals("redraw")) {
-                    game.print();
-                } else if (next.equals("quit")) {
+                } else if (next.equals("r")) {
+                    solitaire.print();
+                } else if (next.equals("quitter")) {
                     break;
-                } else if (next.equals("size")) {
-                    game.printSize();
+                } else if (next.equals("afficher")) {
+                    solitaire.printSize();
                 } else {
                     System.out.print("Veuillez entrer une option valide\n");
                 }
 
-                if (game.win()) {
+                if (solitaire.win()) {
                     System.out.print("*****************\n");
-                    System.out.print("*****YOU WON*****\n");
+                    System.out.print("*****Gay Gay*****\n");
                     System.out.print("*****************\n");
-                    System.out.print("**TO PLAY AGAIN**\n");
-                    System.out.print("***ENTER \"new\"***\n");
+                    System.out.print("**Pour regeeker**\n");
+                    System.out.print("***ENTRER \"nouveau\"***\n");
                     System.out.print("*****************\n");
                 }
             }
+            in.close();
         }
     }
 }

@@ -1,22 +1,23 @@
-package src;
+import java.util.LinkedList;
 
 public class Solitaire {
+	
     private Pioche pioche;
 
-    private LinkedList<Card>[] sets;
+    private LinkedList<Carte>[] sets;
 
     public Solitaire() {
         pioche = new Pioche();
         pioche.shuffle();
 
-        sets = new LinkedList[13];//0-6 Spielstapel, 7-10 Ablegestapel, 11 Stapel, 12 Umgedrehte Karten
+        sets = new LinkedList[13];
         for (int i = 0; i < 13; i++) {
             sets[i] = new LinkedList<Carte>();
         }
 
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < i+1; j++) {
-                sets[i].add(deck.getCarte());
+                sets[i].add(pioche.getCarte());
             }
             sets[i].getLast().makeVisible();
         }
@@ -72,13 +73,9 @@ public class Solitaire {
     }
 
     public void drawStack() {
-        int size = sets[12].size();
-        for (int i = 0; i < size; i++) {
-            sets[11].addLast(sets[12].removeLast());
-        }
-        for (int i = 0; i < (sets[11].size() > 2 ? 3 : sets[11].size()); i++) {
-            sets[12].add(sets[11].removeFirst());
-        }
+        if(sets[12].size() > 0)
+        	sets[11].addLast(sets[12].removeLast());
+        sets[12].add(sets[11].removeFirst());
     }
 
     public boolean checkGame(Carte top, Carte bottom) {
@@ -98,20 +95,20 @@ public class Solitaire {
     public boolean move(int from, int to, int number) {
         if (number <= 0) {
             System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-            System.out.print("Not possible, zero cards\n");
+            System.out.print("Pas Possible, pas de carte\n");
             System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
         }
 
         if (to > 10) {
             System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-            System.out.print("Not permitted, stack\n");
+            System.out.print("Non permis\n");
             System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
             return false;
         }
 
         if (from > 12 || from == 11) {
             System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-            System.out.print("Not permitted!\n");
+            System.out.print("Non permis !\n");
             System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
             return false;
         }
@@ -119,7 +116,7 @@ public class Solitaire {
         if (to > 6) {
             if (number > 1) {
                 System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-                System.out.print("Not permitted, to many cards\n");
+                System.out.print("Impossible, trop de carte\n");
                 System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
                 return false;
             }
@@ -127,14 +124,14 @@ public class Solitaire {
 
             if (sets[from].isEmpty()) {
                 System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-                System.out.print("Not permitted, stack from empty\n");
+                System.out.print("Impossible pile vide\n");
                 System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
                 return false;
             }
 
             if (!sets[from].getLast().isVisible()) {
                 System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-                System.out.print("Not permitted, card not visible\n");
+                System.out.print("Impossible, carte cachée\n");
                 System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
                 return false;
             }
@@ -152,13 +149,13 @@ public class Solitaire {
             }
 
             System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-            System.out.print("Not permitted, check didn't pass\n");
+            System.out.print("Impossible le controle ne passe pas\n");
             System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
             return false;
         } else {
             if (from > 6 && number > 1) {
                 System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-                System.out.print("Not permitted, to many cards\n");
+                System.out.print("Impossible, trop de carte mamen\n");
                 System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
                 return false;
             }
@@ -174,7 +171,7 @@ public class Solitaire {
 
                 if (first == null) {
                     System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-                    System.out.print("Not permitted, first is null\n");
+                    System.out.print("Impossible, le premier est nul\n");
                     System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
                     repair(temp, from);
                     return false;
@@ -183,7 +180,7 @@ public class Solitaire {
                 if (!first.isVisible()) {
 
                     System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-                    System.out.print("Not permitted, card not visible\n");
+                    System.out.print("Impossible, carte cachée mamen\n");
                     System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
                     repair(temp, from);
                     return false;
@@ -200,19 +197,20 @@ public class Solitaire {
                     return true;
                 } else {
                     System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-                    System.out.print("Not permitted, check didn't pass\n");
+                    System.out.print("Impossible, contrôle pas passé\n");
                     System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
                     repair(temp, from);
                     return false;
                 }
             } else {
                 System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-                System.out.print("Not possible, not enough cards\n");
+                System.out.print("Impossible, pas assez cartes\n");
                 System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
                 return false;
             }
-        }
 
+        }
+       
     }
 
     private void repair(LinkedList<Carte> temp, int to) {
@@ -226,7 +224,7 @@ public class Solitaire {
     }
 
     public void printSize() {
-        System.out.print("Stack size:\t" + sets[11].size() + " (without visible cards)\n");
+        System.out.print("Taille de la pile:\t" + sets[11].size() + " (Sans les cartes visibles)\n");
     }
 
 }
