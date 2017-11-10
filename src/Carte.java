@@ -9,7 +9,7 @@ public class Carte {
 	    int couleur;
 
 	    public Carte(int nombre, int couleur) {
-	        this.red = couleur < 2? true : false;
+	        this.red = couleur < 2;
 	        this.nombre = nombre;
 	        this.couleur = couleur;
 	        this.visible = false;

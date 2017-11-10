@@ -13,13 +13,13 @@ public class Main {
                 String next = in.next().toLowerCase();
 
                 if (next.equals("help")) {
-                    //System.out.println();
-                    System.out.print("Press \"m\" to move cards\n");
-                    System.out.print("Press \"d\" to draw from the stack\n");
-                    System.out.print("Press \"new\" to start a new game\n");
-                    System.out.print("Press \"redraw\" to redraw the game\n");
-                    System.out.print("Press \"quit\" to quit the game\n");
-                    System.out.print("Press \"size\" to print the size of the stack\n");
+                    System.out.println();
+                    System.out.print("Press \"d\" Déplacer la carte\n");
+                    System.out.print("Press \"p\" Piocher une carte\n");
+                    System.out.print("Press \"nouveau\" Nouveau jeu\n");
+                    System.out.print("Press \"r\" Réafficher le game ma men\n");
+                    System.out.print("Press \"quitter\" quitter la partie\n");
+                    System.out.print("Press \"afficher\" afficher la taille de la pile\n");
                     System.out.println();
                 } else if (next.equals("d")) {
                     int from = in.nextInt();
@@ -28,23 +28,22 @@ public class Main {
 
                     solitaire.move(from, to, number);
                     solitaire.print();
-                } else if (next.equals("d")) {
-                	solitaire.drawStack();
-                	solitaire.print();
-                } else if (next.equals("new")) {
+                } else if (next.equals("p")) {
+                    solitaire.drawStack();
+                    solitaire.print();
+                } else if (next.equals("nouveau")) {
                     break;
-                } else if (next.equals("redraw")) {
-                	solitaire.print();
-                } else if (next.equals("quit")) {
+                } else if (next.equals("r")) {
+                    solitaire.print();
+                } else if (next.equals("quitter")) {
                     break;
-                } else if (next.equals("size")) {
-                	solitaire.printSize();
+                } else if (next.equals("afficher")) {
+                    solitaire.printSize();
                 } else {
                     System.out.print("Veuillez entrer une option valide\n");
                 }
 
                 if (solitaire.win()) {
-                	System.out.println("k");
                     System.out.print("*****************\n");
                     System.out.print("*****Gay Gay*****\n");
                     System.out.print("*****************\n");
