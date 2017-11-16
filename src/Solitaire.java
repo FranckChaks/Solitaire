@@ -1,41 +1,42 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Solitaire {
 	
     private Pioche pioche;
 
-    private LinkedList<Carte>[] sets;
+    private ArrayList<LinkedList<Carte>> sets;
 
     public Solitaire() {
         pioche = new Pioche();
         pioche.shuffle();
 
-        sets = new LinkedList[13];
+        sets = new ArrayList<LinkedList<Carte>>();
         for (int i = 0; i < 13; i++) {
-            sets[i] = new LinkedList<Carte>();
+            sets.add(new LinkedList<Carte>());
         }
 
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < i+1; j++) {
-                sets[i].add(pioche.getCarte());
+                sets.get(i).add(pioche.getCarte());
             }
-            sets[i].getLast().makeVisible();
+            sets.get(i).getLast().makeVisible();
         }
 
         for (int i = 0; i < 24; i++) {
             Carte carte= pioche.getCarte();
             carte.makeVisible();
-            sets[11].add(carte);
+            sets.get(11).add(carte);
         }
     }
 
     public void print() {
         for (int i = 0; i < 7; i++) {
             System.out.print(i + ":\t");
-            int size = sets[i].size();
+            int size = sets.get(i).size();
             if (size > 0) {
                 for (int j = 0; j < size; j++){
-                    sets[i].get(j).print();
+                    sets.get(i).get(j).print();
                     System.out.print(", ");
                 }
             }
@@ -46,10 +47,10 @@ public class Solitaire {
 
         for (int i = 7; i < 11; i++) {
             System.out.print(i + ": \t");
-            int size = sets[i].size();
+            int size = sets.get(i).size();
             if (size > 0) {
                 for (int j = 0; j < size; j++){
-                    sets[i].get(j).print();
+                    sets.get(i).get(j).print();
                     System.out.print(", ");
                 }
             }
@@ -58,10 +59,10 @@ public class Solitaire {
 
         System.out.println();
         System.out.print(12 + ": Pioche:\t");
-        int size = sets[12].size();
+        int size = sets.get(12).size();
         if (size > 0) {
             for (int j = 0; j < size; j++){
-                sets[12].get(j).print();
+                sets.get(12).get(j).print();
                 System.out.print(", ");
             }
         }
@@ -75,9 +76,9 @@ public class Solitaire {
     }
 
     public void drawStack() {
-        if(sets[12].size() > 0)
-        	sets[11].addLast(sets[12].removeLast());
-        sets[12].add(sets[11].removeFirst());
+        if(sets.get(12).size() > 0)
+        	sets.get(11).addLast(sets.get(12).removeLast());
+        sets.get(12).add(sets.get(11).removeFirst());
     }
 
     public boolean checkGame(Carte top, Carte bottom) {
@@ -124,14 +125,14 @@ public class Solitaire {
             }
 
 
-            if (sets[from].isEmpty()) {
+            if (sets.get(from).isEmpty()) {
                 System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
                 System.out.print("Impossible pile vide\n");
                 System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
                 return false;
             }
 
-            if (!sets[from].getLast().isVisible()) {
+            if (!sets.get(from).getLast().isVisible()) {
                 System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
                 System.out.print("Impossible, carte cachée\n");
                 System.out.print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
@@ -139,12 +140,12 @@ public class Solitaire {
             }
 
 
-            if (checkPile(sets[to].size() == 0? null : sets[to].getLast(), sets[from].getLast())) {
-                sets[to].addLast(sets[from].removeLast());
-                if (!sets[from].isEmpty()) {
-                    sets[from].getLast().makeVisible();
+            if (checkPile(sets.get(to).size() == 0? null : sets.get(to).getLast(), sets.get(from).getLast())) {
+                sets.get(to).addLast(sets.get(from).removeLast());
+                if (!sets.get(from).isEmpty()) {
+                    sets.get(from).getLast().makeVisible();
                 }
-                if (sets[12].isEmpty()) {
+                if (sets.get(12).isEmpty()) {
                     drawStack();
                 }
                 return true;
@@ -162,13 +163,13 @@ public class Solitaire {
                 return false;
             }
 
-            if (number <= sets[from].size()) {
+            if (number <= sets.get(from).size()) {
                 LinkedList<Carte> temp = new LinkedList<Carte>();
                 for (int i = 0; i < number; i++) {
-                    temp.addFirst(sets[from].removeLast());
+                    temp.addFirst(sets.get(from).removeLast());
                 }
 
-                Carte last = sets[to].size() > 0? sets[to].getLast() : null;
+                Carte last = sets.get(to).size() > 0? sets.get(to).getLast() : null;
                 Carte first = temp.getFirst();
 
                 if (first == null) {
@@ -189,11 +190,11 @@ public class Solitaire {
                 }
 
                 if (checkGame(last, first)) {
-                    sets[to].addAll(temp);
-                    if (!sets[from].isEmpty()) {
-                        sets[from].getLast().makeVisible();
+                    sets.get(to).addAll(temp);
+                    if (!sets.get(from).isEmpty()) {
+                        sets.get(from).getLast().makeVisible();
                     }
-                    if (sets[12].isEmpty()) {
+                    if (sets.get(from).isEmpty()) {
                         drawStack();
                     }
                     return true;
@@ -217,16 +218,16 @@ public class Solitaire {
 
     private void repair(LinkedList<Carte> temp, int to) {
         while (!temp.isEmpty()) {
-            sets[to].addLast(temp.removeFirst());
+            sets.get(to).addLast(temp.removeFirst());
         }
     }
 
     public boolean win() {
-        return (sets[7].size() == 13 && sets[8].size() == 13 && sets[9].size() == 13 && sets[10].size() == 13);
+        return (sets.get(7).size() == 13 && sets.get(8).size() == 13 && sets.get(9).size() == 13 && sets.get(10).size() == 13);
     }
 
     public void printSize() {
-        System.out.print("Taille de la pile:\t" + sets[11].size() + " (Sans les cartes visibles)\n");
+        System.out.print("Taille de la pile:\t" + sets.get(11).size() + " (Sans les cartes visibles)\n");
     }
 
 }
